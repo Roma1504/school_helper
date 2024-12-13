@@ -7,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
+    <div id="selected_lesson"></div>
     <div id="lessons"></div>
     <script>
         function create_element(text, class_, element_name, parent) {
@@ -24,6 +25,27 @@
                 create_element(lesson['subject'], 'subject_title', 'p', lesson_element);
                 var tasks_element = create_element('', 'tasks', 'p', lesson_element)
                 var task_element = create_element(lesson['home_task'], 'task', 'p', tasks_element);
+                task_element.addEventListener('click', () => {
+                    var selected_lesson = document.getElementById('selected_lesson');
+                    selected_lesson.appendChild(task_element);
+                    
+                    // Удаляем предыдущие кнопки, если они существуют
+                    var existing_buttons = selected_lesson.getElementsByClassName('complete_button');
+                    while (existing_buttons.length > 0) {
+                        existing_buttons[0].remove();
+                    }
+                    
+                    // Создаем кнопку "Выполнить задачу" только для выделенной задачи
+                    var complete_button = create_element('Выполнить задачу', 'complete_button', 'button', selected_lesson);
+                    
+                    // Обработчик для выполнения задачи и удаления ее
+                    complete_button.addEventListener('click', (event) => {
+                        event.stopPropagation(); // Останавливаем всплытие события, чтобы не перемещать задачу
+                        task_element.classList.toggle('completed'); // Меняем стиль задачи на выполненную
+                        selected_lesson.removeChild(task_element); // Удаляем задачу из выбранных
+                        selected_lesson.removeChild(complete_button); // Удаляем кнопку "Выполнить задачу"
+                    });
+                });
             });
         });
     </script>
