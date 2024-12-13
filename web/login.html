@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Авторизация</title>
+    <script type="text/javascript" src="/eel.js"></script>
+</head>
+<body>
+    <h2>Авторизация</h2>
+    <form id="loginForm">
+        <label for="username">Имя пользователя:</label>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password"><br>
+        <button type="submit">Войти</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script type="text/javascript">
+        document.getElementById('loginForm').onsubmit = function(e) {
+            e.preventDefault();
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            eel.authorize(username, password)(function(response) {
+                console.log(response)
+                if (response.result) {
+                    window.location.href = "welcome.html"; // Переход на другую страницу при успешной авторизации
+                } else {
+                    document.getElementById('result').innerHTML = response.errors[0].text;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

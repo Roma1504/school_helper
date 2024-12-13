@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="/eel.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="lessons"></div>
+    <script>
+        function create_element(text, class_, element_name, parent) {
+            var element = document.createElement(element_name);
+            element.className = class_;
+            element.innerHTML = text;
+            parent.appendChild(element);
+            return element;
+        }
+
+        eel.get_tasks('09.12')(function(result) {
+            const lessons = result['tasks'];
+            console.log(result);
+            lessons.forEach(lesson => {
+                var lesson_element = create_element('', 'lesson', 'div', document.getElementById('lessons'));
+                create_element(lesson['subject'], 'subject_title', 'p', lesson_element);
+                var tasks_element = create_element('', 'tasks', 'p', lesson_element)
+                var task_element = create_element(lesson['home_task'], 'task', 'p', tasks_element);
+            });
+        });
+    </script>
+</body>
+</html>

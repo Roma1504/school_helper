@@ -1,0 +1,80 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Содержимое начинается сверху */
+    height: 100vh; /* Высота 100% от высоты окна */
+    color: #cccccc;
+    background-color: #1f1f1f;
+    padding: 20px; /* Внутренний отступ для body */
+    box-sizing: border-box; /* Учитывает отступы в расчете ширины и высоты */
+    overflow: auto; /* Позволяет прокручивать содержимое, если оно превышает высоту */
+    box-sizing: border-box;
+}
+
+#days {
+    width: 70vh; /* Ширина элемента 50vh */
+    max-width: 800px; /* Максимальная ширина для лучшего отображения */ /* Отступ снизу для элемента #days */
+    margin-right: auto / 2;
+    box-sizing: border-box;
+}
+
+.day {
+    /*padding-left: 20px;  Внутренний отступ для элемента #days */
+    box-shadow: 0 0 20px purple; /* Тень */
+    border: 1px solid white;
+    border-radius: 20px;
+    height: 100%;
+    width: 100%;
+}
+
+.day {
+    margin-bottom: 20px; /* Отступ между днями */
+}
+
+.day_title, .lesson {
+    padding: 0px 20px 0px 20px;
+}
+
+.lesson {
+    margin-bottom: 10px; /* Отступ между уроками */
+    position: relative;
+}
+
+.lesson::before, .lesson::after {
+    content: ""; /* Создает пустой контент для псевдоэлемента */
+    position: absolute; /* Абсолютное позиционирование */
+    top: 0; /* Позиционируем вверху */
+    left: 0; /* Позиционируем слева */
+    right: 0; /* Позиционируем справа */
+    height: 1px; /* Высота градиента */
+    z-index: 1; /* Устанавливаем выше других элементов */
+}
+
+.lesson::before {
+    right: 50%; /* Ограничиваем до середины */
+    background: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)); /* Градиент от белого к прозрачному */
+}
+
+.lesson::after {
+    left: 50%; /* Ограничиваем до середины */
+    background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)); /* Градиент от белого к прозрачному в другую сторону */
+}
+
+.lesson_number, .lesson_subject {
+    display: inline-block;
+    width: fit-content;
+}
+
+.lesson_number::after {
+    content: "."; /* Добавляет точку после элемента */
+    margin-right: 5px; /* Добавляет отступ слева от точки, если нужно */
+}
+
+.lesson_time {
+    width: fit-content;
+    margin-left: auto;
+}
+
+.lesson_number, .lesson_subject {
+    background-color: #181818;
+}
