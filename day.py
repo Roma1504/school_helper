@@ -9,9 +9,7 @@ class HasJsonElement:
         
         return new_data
 
-def get_json(element:HasJsonElement):
-        
-    
+def get_json(element: HasJsonElement):
     if isinstance(element, HasJsonElement):
         return element.get_json()
 
@@ -24,29 +22,31 @@ def get_json(element:HasJsonElement):
 
     return element
 
-class Lesson(HasJsonElement):
-    def __init__(self, element):
-        self.data = {}
-        self.data['number'] = element.find(class_='dnevnik-lesson__number').text
-        self.data['number'] = ''.join([i for i in self.data['number'] if i.isdigit()])
-        if self.data['number'] != '':
-            self.data['number'] = int(self.data['number'])
-        self.data['time'] = element.find(class_='dnevnik-lesson__time').text
-        self.data['subject'] = element.find(class_='js-rt_licey-dnevnik-subject').text
-        self.data['home_task'] = element.find(class_='dnevnik-lesson__task')
-        if self.data['home_task'] is not None:
-            self.data['home_task'] = self.data['home_task'].text
-            self.data['home_task'] = self.data['home_task'].replace('\n', '', self.data['home_task'].count('\n'))
-        self.data['topic'] = element.find(class_='js-rt_licey-dnevnik-topic')
-        if self.data['topic'] is not None:
-            self.data['topic'] = self.data['topic'].text
+def get_lesson(element):
+    lesson_data = {}
+    lesson_data['number'] = element.find(class_='dnevnik-lesson__number').text
+    lesson_data['number'] = ''.join([i for i in lesson_data['number'] if i.isdigit()])
+    if lesson_data['number'] != '':
+        lesson_data['number'] = int(lesson_data['number'])
+    lesson_data['time'] = element.find(class_='dnevnik-lesson__time').text
+    lesson_data['subject'] = element.find(class_='js-rt_licey-dnevnik-subject').text
+    lesson_data['home_task'] = element.find(class_='dnevnik-lesson__task')
+    if lesson_data['home_task'] is not None:
+        lesson_data['home_task'] = lesson_data['home_task'].text
+        lesson_data['home_task'] = lesson_data['home_task'].replace('\n', '', lesson_data['home_task'].count('\n'))
+    lesson_data['topic'] = element.find(class_='js-rt_licey-dnevnik-topic')
+    if lesson_data['topic'] is not None:
+        lesson_data['topic'] = lesson_data['topic'].text
+    
+    return lesson_data
 
-class Day(HasJsonElement):
-    def __init__(self, element):
-        self.data = {}
-        if element.find(class_='page-empty'):
-            return
-        self.data['title'] = element.find(class_='dnevnik-day__title').text
-        self.data['lessons'] = []
-        for i in element.find_all(class_='dnevnik-lesson'):
-            self.data['lessons'].append(Lesson(i))
+def get_day(element):
+    day_data = {}
+    if element.find(class_='page-empty'):
+        return None
+    day_data['title'] = element.find(class_='dnevnik-day__title').text
+    day_data['lessons'] = []
+    for i in element.find_all(class_='dnevnik-lesson'):
+        day_data['lessons'].append(get_lesson(i))
+    
+    return day_data

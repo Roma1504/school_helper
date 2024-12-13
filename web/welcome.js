@@ -11,7 +11,7 @@ eel.get_journal_data()(function(response) {
     const fragment = document.createDocumentFragment(); // Создаем фрагмент для оптимизации
 
     response.forEach(day => {
-        if (!day.title || !day.lessons) return; // Проверка на falsy значение
+        if (day === null) return; // Проверка на falsy значение
 
         const dayElement = createElement('', "day", "div", fragment);
         createElement(day.title, "day_title", "p", dayElement);

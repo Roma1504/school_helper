@@ -19,7 +19,6 @@
 
         eel.get_tasks('09.12')(function(result) {
             const lessons = result['tasks'];
-            console.log(result);
             lessons.forEach(lesson => {
                 var lesson_element = create_element('', 'lesson', 'div', document.getElementById('lessons'));
                 create_element(lesson['subject'], 'subject_title', 'p', lesson_element);

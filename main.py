@@ -2,7 +2,7 @@ import http.client
 import json
 import eel
 import bs4
-from day import Day
+from day import get_day
 
 eel.init('web')
 
@@ -63,7 +63,7 @@ def get_journal_data():
     days:bs4.element.Tag = soup.find_all(class_='dnevnik-day')
     data = []
     for day in days:
-        data.append(Day(day).get_json())
+        data.append(get_day(day))
     return data
 
 @eel.expose
